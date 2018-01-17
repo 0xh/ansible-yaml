@@ -1,0 +1,8 @@
+---
+# tasks file for Memcached
+- name: 安装memcached
+  yum: name={{Memcache.name}} state=present
+- name: 同步配置文件
+  template: src={{Memcache.name}} dest={{Memcache.config}} mode=644
+- name: 启动memcached服务
+  service: name={{Memcache.name}} state=started enabled=yes

@@ -1,0 +1,5 @@
+- name: 确保依赖包安装
+  yum: name={{item}} state=present
+  with_items: "{{DepPkgs}}"
+- name: 确保下载目录存在
+  file: path={{Downloads}} state=directory

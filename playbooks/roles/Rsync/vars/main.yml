@@ -1,0 +1,6 @@
+---
+# vars file for Rsync
+RpmCmd: rpm -qa|grep -c rsync
+ProgName: rsync
+BinFile: /usr/bin/rsync
+ConfigFile: /etc/rsyncd.conf

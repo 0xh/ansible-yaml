@@ -1,0 +1,60 @@
+# 安装igbinary
+- name: 拷贝igbinary到远程主机
+  synchronize: src={{Modules.igbinary.name}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为igbinary生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} {{PHP_Tools.phpize}}
+- name: 配置igbinary
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} ./configure CFLAGS="-O2 -g" --enable-igbinary --with-php-config="{{PHP_Tools.php_config}}"
+- name: 编译igbinary
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} make -j 4
+- name: 安装igbinary
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} make install
+
+# 安装php-imagick支持
+- name: 拷贝imagick到远程主机
+  synchronize: src={{Modules.imagick.name}}-{{Modules.imagick.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为imagick生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} {{PHP_Tools.phpize}}
+- name: 配置imagick
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} ./configure --with-imagick={{Modules.ImageMagick.prefix}} --with-php-config={{PHP_Tools.php_config}}
+- name: 编译imagick
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} make -j 4
+- name: 安装imagick
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} make install
+
+# 安装php-redis支持
+- name: 拷贝redis到远程主机
+  synchronize: src={{Modules.redis.name}}-{{Modules.redis.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为redis生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} {{PHP_Tools.phpize}}
+- name: 配置redis
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} ./configure --with-php-config={{PHP_Tools.php_config}}
+- name: 编译redis
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} make -j 4
+- name: 安装redis
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} make install
+
+# 安装php-memcache支持
+- name: 拷贝memcache到远程主机
+  synchronize: src={{Modules.memcache.name}}-{{Modules.memcache.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为memcache生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} {{PHP_Tools.phpize}}
+- name: 配置memcache
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} ./configure --with-php-config={{PHP_Tools.php_config}}
+- name: 编译memcache
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} make -j 4
+- name: 安装memcache
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} make install
+
+# 安装php-mongodb支持
+- name: 拷贝mongodb到远程主机
+  synchronize: src={{Modules.mongodb.name}}-{{Modules.mongodb.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为mongodb生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.mongodb.name}}-{{Modules.mongodb.version}} {{PHP_Tools.phpize}}
+- name: 配置mongodb
+  shell: chdir={{Downloads}}/{{Modules.mongodb.name}}-{{Modules.mongodb.version}} ./configure --with-php-config={{PHP_Tools.php_config}}
+- name: 编译mongodb
+  shell: chdir={{Downloads}}/{{Modules.mongodb.name}}-{{Modules.mongodb.version}} make -j 4
+- name: 安装mongodb
+  shell: chdir={{Downloads}}/{{Modules.mongodb.name}}-{{Modules.mongodb.version}} make install
+

@@ -1,0 +1,35 @@
+# 安装fontconfig
+- name: 查看是否已经存在fontconfig
+  shell: ls {{Modules.fontconfig.prefix}}
+  register: fontconfigInstalled
+  ignore_errors: yes
+- name: 拷贝fontconfig到远程主机
+  synchronize: src={{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: fontconfigInstalled|failed
+- name: 配置fontconfig
+  shell: chdir={{Downloads}}/{{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} ./configure --prefix={{Modules.fontconfig.prefix}} --enable-libxml2
+  when: fontconfigInstalled|failed
+- name: 编译fontconfig
+  shell: chdir={{Downloads}}/{{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} make -j 4
+  when: fontconfigInstalled|failed
+- name: 安装fontconfig
+  shell: chdir={{Downloads}}/{{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} make install
+  when: fontconfigInstalled|failed
+
+# 安装GD
+- name: 查看是否已经存在GD
+  shell: ls {{Modules.GD.prefix}}
+  register: GDInstalled
+  ignore_errors: yes
+- name: 拷贝GD到远程主机
+  synchronize: src={{Modules.GD.name}}-{{Modules.GD.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: GDInstalled|failed
+- name: 配置GD
+  shell: chdir={{Downloads}}/{{Modules.GD.name}}-{{Modules.GD.version}} ./configure --prefix={{Modules.GD.prefix}} {{Modules.GD.with_args}}
+  when: GDInstalled|failed
+- name: 编译GD
+  shell: chdir={{Downloads}}/{{Modules.GD.name}}-{{Modules.GD.version}} make -j 4
+  when: GDInstalled|failed
+- name: 安装GD
+  shell: chdir={{Downloads}}/{{Modules.GD.name}}-{{Modules.GD.version}} make install
+  when: GDInstalled|failed

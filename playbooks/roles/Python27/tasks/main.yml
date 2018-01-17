@@ -1,0 +1,5 @@
+---
+# tasks file for Python27
+- include: DepIns.yml
+- include: PyenvIns.yml
+- include: Py27Ins.yml

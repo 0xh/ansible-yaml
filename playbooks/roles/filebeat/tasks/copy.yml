@@ -1,0 +1,2 @@
+- name: Copy rpm packages to target server directory
+  copy: src={{filebeat_rpm}} dest={{package_tmp_path}}

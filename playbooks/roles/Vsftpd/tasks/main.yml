@@ -1,0 +1,13 @@
+---
+# tasks file for Vsftpd
+- name: 查看是否已经安装过Vsftpd
+  shell: "{{ShellCmd}}"
+  ignore_errors: yes
+  register: result
+- name: 安装Vsftpd
+  yum: name={{ProgName}} state=latest
+  when: result.stdout=="0"
+- name: 同步配置文件
+  template: src=vsftpd.conf.j2 dest={{ConfFile}}
+- name: restart vsftpd
+  service: name={{ProgName}} state=restarted enabled=yes

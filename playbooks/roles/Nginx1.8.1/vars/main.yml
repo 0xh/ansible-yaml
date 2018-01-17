@@ -1,0 +1,58 @@
+---
+# vars file for Nginx18
+Nginx:
+  name: nginx
+  version: 1.8.1
+  user:
+    name: www
+    home: /www/web
+    shell: /sbin/nologin
+  prefix: /usr/local/nginx
+  pid: /var/run/nginx.pid
+  lock: /var/lock/subsys/nginx
+  environ:
+    LUAJIT_LIB: /usr/local/luajit/lib
+    LUAJIT_INC: /usr/local/luajit/include/luajit-2.0
+
+DepPkgs: 
+- zlib-devel
+- openssl-devel
+- mod_ssl
+- patch
+Downloads: /opt/software
+WebDir: /www
+
+ModuleLib: /usr/local/lib
+ModuleLocal: /etc/ld.so.conf.d/local.conf
+ModuleLuaLib: /usr/local/luajit/lib
+ModuleLuaLocal: /etc/ld.so.conf.d/usr_local_luajit_lib.conf
+
+Modules:
+  libmaxminddb:
+    name: libmaxminddb
+    version: 1.2.0
+  pcre:
+    name: pcre
+    version: "8.35"  
+  Lua:
+    name: LuaJIT
+    prefix: /usr/local/luajit
+    version: 2.0.2
+  lua:
+    name: lua-nginx-module
+    version: 0.10.2
+  check:
+    name: nginx_upstream_check_module
+    version: master
+  hash:
+    name: nginx_upstream_hash
+    version: master
+  purge:
+    name: ngx_cache_purge
+    version: "2.3"
+  devel:
+    name: ngx_devel_kit
+    version: 0.2.19
+  geoip:
+    name: ngx_http_geoip2_module
+    version: master

@@ -1,0 +1,18 @@
+---
+# tasks file for rabbitmq
+- name: 安装erlang yum源
+  shell: rpm -ivh {{erlang.repo}}
+- name: 安装erlang
+  yum: name={{erlang.name}}-{{erlang.version}} state=present
+- name: 安装socat yum源
+  shell: chdir=/etc/yum.repos.d wget {{socat.repo}}
+- name: 安装socat
+  yum: name={{socat.name}} state=present
+- name: 确保远程下载路径存在
+  file: path={{Downloads}} state=directory
+- name: 拷贝rabbitmq到远程路径
+  copy: src={{rabbitmq.rpm}} dest={{Downloads}}
+- name: 安装rabbitmq
+  shell: chdir={{Downloads}} rpm -ivh {{rabbitmq.rpm}}
+- name: 设置开机启动
+  service: name=rabbitmq-server state=started enabled=yes

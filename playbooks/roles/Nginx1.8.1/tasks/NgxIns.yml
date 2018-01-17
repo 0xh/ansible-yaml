@@ -1,0 +1,34 @@
+- name: 拷贝所需目录到远程主机
+  synchronize: src={{item.name}}-{{item.version}} dest={{Downloads}} recursive=yes delete=yes
+  with_items:
+    - "{{Nginx}}"
+    - "{{Modules.check}}"
+    - "{{Modules.purge}}"
+    - "{{Modules.devel}}"
+    - "{{Modules.geoip}}"
+    - "{{Modules.lua}}"
+
+- name: 添加www目录
+  file: name={{WebDir}} state=directory
+- name: 添加nginx管理用户
+  user: name={{Nginx.user.name}} home={{Nginx.user.home}} shell={{Nginx.user.shell}}
+- name: 配置nginx
+  environment: "{{Nginx.environ}}"
+  shell: chdir={{Downloads}}/{{Nginx.name}}-{{Nginx.version}} ./configure
+      --prefix={{Nginx.prefix}} --user={{Nginx.user.name}} --group={{Nginx.user.name}}
+      --pid-path={{Nginx.pid}} --lock-path={{Nginx.lock}}
+      --add-module=../{{Modules.purge.name}}-{{Modules.purge.version}}
+      --add-module=../{{Modules.check.name}}-{{Modules.check.version}}
+      --add-module=../{{Modules.devel.name}}-{{Modules.devel.version}}
+      --add-module=../{{Modules.lua.name}}-{{Modules.lua.version}}
+      --add-module=../{{Modules.geoip.name}}-{{Modules.geoip.version}}
+      --with-pcre=../{{Modules.pcre.name}}-{{Modules.pcre.version}}
+      --with-http_stub_status_module --with-http_ssl_module --with-http_realip_module
+- name: 编译nginx
+  shell: chdir={{Downloads}}/{{Nginx.name}}-{{Nginx.version}} make -j 4
+- name: 安装nginx
+  shell: chdir={{Downloads}}/{{Nginx.name}}-{{Nginx.version}} make install
+- name: 创建nginx软链接
+  file: src={{Nginx.prefix}}/sbin/{{Nginx.name}} dest=/usr/sbin/{{Nginx.name}} state=link
+- name: 创建geoip目录
+  file: path={{Nginx.prefix}}/conf/geoip state=directory

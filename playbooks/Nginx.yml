@@ -1,0 +1,19 @@
+---
+- hosts: bigdata[3]
+  remote_user: luoyifei
+  sudo: yes
+  roles:
+    #- sysinit
+    #- filebeat
+    #- zabbix_agent
+    #- Rsync
+    #- Lsyncd
+    #- Vsftpd
+    #- PHP56
+    #- Nginx14
+    - Nginx1.8.1
+    #- GeoIPUpdate
+    #- Redis
+    #- Memcached
+    #- Python27
+    #- MySQL56

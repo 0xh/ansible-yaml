@@ -1,0 +1,2 @@
+- name: 允许用户sudo操作
+  template: src=su.j2 dest={{SuConf}} backup=yes owner=root group=root mode=0644

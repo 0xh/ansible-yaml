@@ -1,0 +1,28 @@
+- name: 创建mysql用户
+  user: name={{MySQL.name}} createhome=no shell=/sbin/nologin
+- name: 创建相关目录
+  file: path={{item}} state=directory recurse=yes owner={{MySQL.name}} group={{MySQL.name}}
+  with_items: "{{MySQL.dir}}"
+- name: 获取serverid
+  shell: ifconfig| sed -n '2s#^.*addr:\(.*\)  Bca.*$#\1#gp' | awk -F '.' '{print $4}'
+  register: result1
+- name: 获取poolsize
+  shell: expr $(cat /proc/meminfo | grep MemTotal| sed -r 's#MemTotal:(.*) kB#\1#g') \* 3 / 5 / 1024 / 1024
+  register: result2
+- name: 给serverid赋值
+  set_fact: serverid={{result1.stdout}} poolsize={{result2.stdout}}
+- name: 同步配置文件
+  template: src={{MySQL.cfgfile}}.j2 dest=/etc/{{MySQL.cfgfile}} mode=644 backup=yes
+- name: 创建初始数据库
+  shell: "{{MySQL.init}}"
+- name: 启动并设置开机启动服务
+  service: name={{MySQL.name}} state=started enabled=yes
+- name: 查看随机密码是否已生成
+  shell: awk 'NR==1 {print $NF}' $HOME/.mysql_secret
+  register: result3
+  ignore_errors: yes
+- name: 获取随机密码
+  set_fact: dbpasswd={{result3.stdout}}
+  when: result3|success
+- name: 设置mysql初始密码
+  shell: /usr/bin/mysqladmin -u root password "{{dbpasswd}}"

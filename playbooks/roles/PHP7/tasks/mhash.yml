@@ -1,0 +1,22 @@
+- name: 查看是否已经安装过mhash
+  shell: ls {{Modules.mhash.prefix}}
+  register: mhashInstalled
+  ignore_errors: yes
+- name: 确保下载目录存在
+  file: path={{Downloads}} state=directory
+  when: mhashInstalled|failed
+- name: 拷贝mhash
+  synchronize: src={{Modules.mhash.name}}-{{Modules.mhash.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: mhashInstalled|failed
+- name: 创建mhash安装路径
+  file: path={{Modules.mhash.prefix}} state=directory owner=luoyifei group=luoyifei
+  when: mhashInstalled|failed
+- name: 配置mhash
+  shell: chdir={{Downloads}}/{{Modules.mhash.name}}-{{Modules.mhash.version}} ./configure --prefix={{Modules.mhash.prefix}}
+  when: mhashInstalled|failed
+- name: 编译mhash
+  shell: chdir={{Downloads}}/{{Modules.mhash.name}}-{{Modules.mhash.version}} make -j 4
+  when: mhashInstalled|failed
+- name: 安装mhash
+  shell: chdir={{Downloads}}/{{Modules.mhash.name}}-{{Modules.mhash.version}} make install
+  when: mhashInstalled|failed

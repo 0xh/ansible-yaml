@@ -1,0 +1,12 @@
+---
+# vars file for zabbix_agent
+Downloads: /opt/software
+Program: zabbix_agent
+WorkDir: zabbix-2.4.0 
+DeployDir: /usr/local/zabbix
+Prog: zabbix
+GID: 201
+Shell: /sbin/nologin
+UID: 201
+ZabbixServerHost: 10.28.140.71
+ProcName: zabbix_agentd

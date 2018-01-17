@@ -1,0 +1,11 @@
+{{Nginx.prefix}}/logs/*log {
+    daily
+    rotate 10
+    missingok
+    notifempty
+    compress
+    sharedscripts
+    postrotate
+        /bin/kill -USR1 $(cat {{Nginx.pid}} 2>/dev/null) 2>/dev/null || :
+    endscript
+}

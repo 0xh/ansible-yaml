@@ -1,0 +1,33 @@
+- name: 确保下载目录存在
+  file: path={{Downloads}} state=directory
+
+- name: 拷贝libmaxminddb到远程主机
+  synchronize: src={{Modules.libmaxminddb.name}}-{{Modules.libmaxminddb.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置libmaxminddb
+  shell: chdir={{Downloads}}/{{Modules.libmaxminddb.name}}-{{Modules.libmaxminddb.version}} ./configure
+- name: 编译libmaxminddb
+  shell: chdir={{Downloads}}/{{Modules.libmaxminddb.name}}-{{Modules.libmaxminddb.version}} make -j 4
+- name: 安装libmaxminddb
+  shell: chdir={{Downloads}}/{{Modules.libmaxminddb.name}}-{{Modules.libmaxminddb.version}} make install
+- name: 重新加载模块
+  lineinfile: dest={{ModuleLocal}} line={{ModuleLib}} create=yes
+  notify:
+  - reload ldconfig
+
+- name: 拷贝pcre到远程主机
+  synchronize: src={{Modules.pcre.name}}-{{Modules.pcre.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置pcre
+  shell: chdir={{Downloads}}/{{Modules.pcre.name}}-{{Modules.pcre.version}} ./configure
+- name: 编译pcre
+  shell: chdir={{Downloads}}/{{Modules.pcre.name}}-{{Modules.pcre.version}} make -j 4
+- name: 安装pcre
+  shell: chdir={{Downloads}}/{{Modules.pcre.name}}-{{Modules.pcre.version}} make install
+
+- name: 拷贝Lua到远程主机
+  synchronize: src={{Modules.Lua.name}}-{{Modules.Lua.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 安装Lua
+  shell: chdir={{Downloads}}/{{Modules.Lua.name}}-{{Modules.Lua.version}} make install PREFIX={{Modules.Lua.prefix}} 
+- name: 重新加载模块
+  lineinfile: dest={{ModuleLuaLocal}} line={{ModuleLuaLib}} create=yes
+  notify:
+  - reload ldconfig

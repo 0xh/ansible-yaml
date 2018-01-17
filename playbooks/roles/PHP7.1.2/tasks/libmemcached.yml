@@ -1,0 +1,17 @@
+# 安装libmemcached
+- name: 查看是否已经存在libmemcached
+  shell: ls {{Modules.libmemcached.include}}
+  register: libmemcachedInstalled
+  ignore_errors: yes
+- name: 拷贝libmemcached到远程主机
+  synchronize: src={{Modules.libmemcached.name}}-{{Modules.libmemcached.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: libmemcachedInstalled|failed
+- name: 配置libmemcached
+  shell: chdir={{Downloads}}/{{Modules.libmemcached.name}}-{{Modules.libmemcached.version}} ./configure
+  when: libmemcachedInstalled|failed
+- name: 编译libmemcached
+  shell: chdir={{Downloads}}/{{Modules.libmemcached.name}}-{{Modules.libmemcached.version}} make -j 4
+  when: libmemcachedInstalled|failed
+- name: 安装libmemcached
+  shell: chdir={{Downloads}}/{{Modules.libmemcached.name}}-{{Modules.libmemcached.version}} make install
+  when: libmemcachedInstalled|failed

@@ -1,0 +1,24 @@
+---
+# vars file for Python27
+pyenv:
+  name: pyenv
+  prefix: /usr/local/pyenv
+  repo: https://github.com/yyuu/pyenv.git
+  environ: 
+    PYENV_ROOT: "/usr/local/pyenv"
+    PATH: "$PATH:$PYENV_ROOT/bin"
+
+python:
+  version: 2.7.10
+  dep:
+  - zlib-devel
+  - bzip2-devel
+  - openssl-devel
+  - ncurses-devel
+  - sqlite-devel
+  - readline-devel
+  - tk-devel
+  - gdbm-devel
+  - db4-devel
+  - libpcap-devel
+  - xz-devel

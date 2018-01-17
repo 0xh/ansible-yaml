@@ -1,0 +1,15 @@
+---
+# tasks file for Lsyncd
+- name: 查看是否已经安装过Lsync
+  shell: "{{ShellCmd}}"
+  ignore_errors: yes
+  register: result  
+- name: 创建远程下载目录
+  file: path={{Downloads}} state=directory mode=0755
+  when: result.stdout=="0"
+- name: 拷贝rpm包到远程主机
+  copy: src={{PkgName}} dest={{Downloads}}
+  when: result.stdout=="0"
+- name: 安装rpm包
+  shell: chdir={{Downloads}} rpm -ivh {{PkgName}}
+  when: result.stdout=="0"

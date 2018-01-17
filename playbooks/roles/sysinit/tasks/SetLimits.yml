@@ -1,0 +1,7 @@
+- name: 查看limit.conf文件是否配置过
+  shell: "{{ CountLimits }}"
+  ignore_errors: yes
+  register: result
+- name: 修改limits.conf
+  template: src=limits.conf.j2 dest={{LimitsFile}} mode=644
+  when: result|failed

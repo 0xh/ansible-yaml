@@ -1,0 +1,13 @@
+---
+# tasks file for MySQL56
+- name: 查看是否已经安装过mysql
+  shell: rpm -qa|grep MySQL
+  register: result
+  ignore_errors: yes
+- include: DepIns.yml
+  when: result|failed
+- include: MsqIns.yml
+  when: result|failed
+- include: MsqCfg.yml
+  when: result|failed
+

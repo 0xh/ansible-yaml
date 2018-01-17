@@ -1,0 +1,11 @@
+- name: check if filebeat already exists
+  command: rpm -q filebeat
+  ignore_errors: yes
+  register: result
+- name: install filebeat through rpm package
+  command: chdir={{package_tmp_path}} rpm -ivh {{filebeat_rpm}} 
+  when: result.stdout == "package filebeat is not installed"
+- name: syncronize config file to target server
+  template: src=filebeat.yml.j2 dest={{filebeat_config_file}} mode=0644
+  notify:
+  - restart filebeat 

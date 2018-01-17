@@ -1,0 +1,5 @@
+---
+# vars file for Vsftpd
+ShellCmd: rpm -qa | grep -c vsftpd
+ProgName: vsftpd
+ConfFile: /etc/vsftpd/vsftpd.conf

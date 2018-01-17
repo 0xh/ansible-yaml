@@ -1,0 +1,17 @@
+# 安装ImageMagick
+- name: 查看是否已经存在ImageMagick
+  shell: ls {{Modules.ImageMagick.prefix}}
+  register: imagickInstalled
+  ignore_errors: yes
+- name: 拷贝ImageMagick到远程主机
+  synchronize: src={{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: imagickInstalled|failed
+- name: 配置ImageMagick
+  shell: chdir={{Downloads}}/{{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} ./configure --prefix={{Modules.ImageMagick.prefix}}
+  when: imagickInstalled|failed
+- name: 编译ImageMagick
+  shell: chdir={{Downloads}}/{{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} make -j 4
+  when: imagickInstalled|failed
+- name: 安装ImageMagick
+  shell: chdir={{Downloads}}/{{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} make install
+  when: imagickInstalled|failed

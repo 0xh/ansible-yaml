@@ -1,0 +1,7 @@
+---
+- hosts: dev02
+  remote_user: luoyifei
+  sudo: yes
+  roles:
+    - sysinit
+    - Python27

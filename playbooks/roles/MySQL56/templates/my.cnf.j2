@@ -1,0 +1,98 @@
+#
+[client]
+port = 3306
+socket = /data/mysql/run/mysql.sock   
+default-character-set = utf8
+
+[mysqldump]
+max_allowed_packet=512M
+default-character-set=utf8mb4
+
+[mysqld]
+user = mysql
+port = 3306
+socket = /data/mysql/run/mysql.sock
+datadir = /data/mysql/data
+log-error = /data/mysql/logs/mysql_error.log   
+
+default-storage-engine=InnoDB
+character-set-server=utf8mb4
+collation-server=utf8mb4_general_ci
+lower-case-table-names=1
+
+explicit-defaults-for-timestamp = 1
+
+group-concat-max-len=1048576
+
+sql_mode="" 
+
+open_files_limit = 65535
+innodb_open_files=65535
+back_log = 600
+max_connections = 800
+max_connect_errors = 30000
+skip_external_locking
+skip_name_resolve
+max_allowed_packet = 64M
+read_rnd_buffer_size = 16M
+read_buffer_size = 16M
+sort_buffer_size = 32M
+join_buffer_size = 32M
+thread_cache_size = 512
+query_cache_size = 256M
+query_cache_limit = 2M
+query_cache_min_res_unit = 2k
+thread_stack = 192K
+tmp_table_size = 256M
+max_tmp_tables = 128
+max_heap_table_size = 256M
+wait_timeout=300
+interactive_timeout=300
+server-id = {{serverid}}
+log-bin = /data/mysql/logs
+binlog_cache_size = 16M
+max_binlog_cache_size = 32M
+binlog_format = ROW
+
+#replicate-do-db:主从复制时设置同步库的名称，非从库可以注释此行
+
+max_binlog_size = 1G
+expire_logs_days = 15
+bulk_insert_buffer_size = 16M
+key_buffer_size = 2048M
+myisam_sort_buffer_size = 16M
+myisam_max_sort_file_size = 1G
+myisam_repair_threads = 1
+relay_log_recovery=1
+#innodb set
+innodb_additional_mem_pool_size = 32M
+innodb_buffer_pool_size = {{poolsize}}G
+#innodb_thread_concurrency = 8
+innodb_buffer_pool_instances = 1
+innodb_thread_concurrency = 12
+innodb_read_io_threads = 4
+innodb_write_io_threads = 2
+innodb_data_home_dir = /data/mysql/data
+innodb_data_file_path = ibdata1:512M:autoextend
+innodb_log_group_home_dir = /data/mysql/data
+innodb_log_file_size = 512M
+innodb_log_files_in_group = 3
+#sync_binlog:要求性能设为0，要求安全设为1
+sync_binlog=0
+innodb_flush_method = O_DIRECT
+#innodb_flush_log_at_trx_commit:要求性能设为2，要求安全设为1
+innodb_flush_log_at_trx_commit = 2
+innodb_file_format = Barracuda
+innodb_log_buffer_size = 16M
+innodb_max_dirty_pages_pct = 90
+innodb_lock_wait_timeout = 120
+innodb_file_per_table = 1
+#transaction_isolation = READ-COMMITTED
+slow_query_log=1
+long_query_time = 1
+slow_query_log_file = /data/mysql/slow_query_log/slowquery.log
+#log_slave_updates = 1
+query_cache_type = 0
+innodb_io_capacity=600
+innodb_io_capacity_max=1000
+innodb_flush_neighbors = 0

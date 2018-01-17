@@ -1,0 +1,15 @@
+- name: 确保下载目录存在
+  file: path={{Downloads}} state=directory
+- name: 拷贝PHP
+  synchronize: src={{Modules.PHP.name}}-{{Modules.PHP.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 创建PHP安装路径
+  file: path={{Modules.PHP.prefix}} state=directory
+- name: 配置PHP
+  environment: "{{Modules.PHP.environ}}"
+  shell: chdir="{{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}" ./configure --prefix={{Modules.PHP.prefix}} {{Modules.PHP.with_args}}
+- name: 编译PHP
+  shell: chdir="{{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}" make 
+- name: 安装PHP
+  shell: chdir="{{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}" make install
+- name: 同步php.ini
+  template: src={{Modules.PHP.config_file}} dest=/etc/php.ini mode=644

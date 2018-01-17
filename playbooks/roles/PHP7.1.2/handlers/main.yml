@@ -1,0 +1,4 @@
+---
+# handlers file for PHP7
+- name: reload env
+  shell: source /etc/profile

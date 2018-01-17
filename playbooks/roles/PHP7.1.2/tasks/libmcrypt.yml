@@ -1,0 +1,19 @@
+- name: 查看是否已经安装过libmcypt
+  shell: ls {{Modules.libmcrypt.prefix}}
+  register: libmcryptInstalled
+  ignore_errors: yes
+- name: 拷贝libmcrypt
+  synchronize: src={{Modules.libmcrypt.name}}-{{Modules.libmcrypt.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: libmcryptInstalled|failed
+- name: 创建libmcrypt安装路径
+  file: path={{Modules.libmcrypt.prefix}} state=directory owner=root group=root
+  when: libmcryptInstalled|failed
+- name: 配置libmcrypt
+  shell: chdir="{{Downloads}}/{{Modules.libmcrypt.name}}-{{Modules.libmcrypt.version}}" ./configure --prefix={{Modules.libmcrypt.prefix}}
+  when: libmcryptInstalled|failed
+- name: 编译libmcrypt
+  shell: chdir="{{Downloads}}/{{Modules.libmcrypt.name}}-{{Modules.libmcrypt.version}}" make -j 4 
+  when: libmcryptInstalled|failed
+- name: 安装libmcrypt
+  shell: chdir="{{Downloads}}/{{Modules.libmcrypt.name}}-{{Modules.libmcrypt.version}}" make install
+  when: libmcryptInstalled|failed

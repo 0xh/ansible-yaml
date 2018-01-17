@@ -1,0 +1,11 @@
+---
+# tasks file for Redis
+- name: 查看是否已经安装redis
+  shell: ls "{{Dir.bin}}"
+  ignore_errors: yes
+  register: result
+- include: RedIns.yml
+  when: result|failed
+- include: RedCfg.yml
+  when: result|failed
+

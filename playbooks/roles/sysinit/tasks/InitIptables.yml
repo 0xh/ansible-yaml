@@ -1,0 +1,6 @@
+- name: 确保下载目录存在
+  file: path={{Downloads}} state=directory 
+- name: 拷贝iptables初始化脚本到远程路径
+  copy: src={{InitIptables}} dest={{Downloads}}/{{InitIptables}} owner=root group=root mode=755
+- name: 执行远程脚本
+  shell: chdir={{Downloads}} ./{{InitIptables}}

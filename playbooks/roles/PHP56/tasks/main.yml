@@ -1,0 +1,18 @@
+---
+# tasks file for PHP56
+- name: 查看php5.6是否已经安装过
+  shell: ls {{PHPInsDir}}
+  ignore_errors: yes
+  register: isInstalled
+- include: DepIns.yml
+  when: isInstalled|failed
+- include: libmcrypt.yml
+  when: isInstalled|failed
+- include: mhash.yml
+  when: isInstalled|failed
+- include: mcrypt.yml
+  when: isInstalled|failed
+- include: PHP.yml
+  when: isInstalled|failed
+- include: plugin.yml
+  when: isInstalled|failed

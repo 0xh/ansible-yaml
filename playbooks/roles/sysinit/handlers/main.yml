@@ -1,0 +1,12 @@
+---
+# handlers file for sysinit
+- name: stop ntpd service
+  service: name=ntpd state=stopped enabled=no
+- name: install ntpdate
+  yum: name=ntpdate state=latest
+- name: sync from remote ntpserver
+  shell: "{{SyncTimeJob}}"
+- name: restart crond service
+  service: name=crond state=restarted
+- name: sysctl come to infect
+  shell: sysctl -p

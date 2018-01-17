@@ -1,0 +1,4 @@
+---
+# handlers file for Rsync
+- name: disable xinetd
+  shell: sed -i 's/yes/no/g' /etc/xinetd.d/rsync

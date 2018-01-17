@@ -1,0 +1,27 @@
+- name: 查看当前时区
+  shell: date -R|grep "\+0800"
+  register: timezone
+  ignore_errors: yes
+- name: 删除原系统时区文件
+  file: path={{SysTZFile}} state=absent
+  when: timezone|failed
+- name: 将东八区时区文件链接到系统文件
+  file: src={{TimeZone}} dest={{SysTZFile}} state=link
+  when: timezone|failed
+- name: 查看是否已安装ntp
+  shell: rpm -qa|egrep "\bntp\b"
+  register: ntp_installed
+  ignore_errors: yes
+- name: 停止ntpd服务
+  service: name=ntpd state=stopped enabled=no
+  when: ntp_installed|success
+- name: 安装ntpdate工具
+  yum: name=ntpdate state=present
+- name: 从外部时间服务器同步时间
+  shell: "{{SyncTimeJob}}"
+- name: 重启日志服务
+  service: name=rsyslog state=restarted
+- name: 添加定时任务同步时间
+  cron: name="Sync Time" minute="59" hour="23" job="{{SyncTimeJob}}"
+- name: 重启crond服务
+  service: name=crond state=restarted

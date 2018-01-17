@@ -1,0 +1,11 @@
+- name: 确保git安装
+  yum: name=git state=present
+- name: 从github克隆项目到远程主机
+  git: repo={{pyenv.repo}} dest={{pyenv.prefix}}
+- name: 修改系统profile
+  template: src=profile.j2 dest=/etc/profile
+  register: result
+- name: 重新加载系统profile
+  shell: source /etc/profile
+  when: result|success
+

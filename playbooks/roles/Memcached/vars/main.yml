@@ -1,0 +1,5 @@
+---
+# vars file for Memcached
+Memcache:
+  name: memcached
+  config: /etc/sysconfig/memcached

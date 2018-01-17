@@ -1,0 +1,24 @@
+---
+# vars file for Redis
+Downloads: /opt/software
+
+Redis:
+  name: redis
+  version: 3.0.7
+  prefix: /usr/local/redis
+  cfgfile: redis.conf.j2
+  initfile: redis_init_script.j2
+
+Dir:
+  conf: "{{Redis.prefix}}/conf"
+  db: "{{Redis.prefix}}/db"
+  run: "{{Redis.prefix}}/run"
+  bin: "{{Redis.prefix}}/bin"
+  log: "{{Redis.prefix}}/log"
+  init: /etc/init.d
+
+Instance:
+- 9736
+- 9737
+- 9738
+- 9739

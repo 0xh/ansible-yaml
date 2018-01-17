@@ -1,0 +1,12 @@
+---
+# tasks file for Apache
+- name: 查看是否已经安装过httpd
+  shell: rpm -qa|grep "{{ProgName}}*"
+  ignore_errors: yes
+  register: result
+- include: DepIns.yml
+  when: result|failed
+- include: HttpdIns.yml
+  when: result|failed
+- include: ModIns.yml
+  when: result|failed

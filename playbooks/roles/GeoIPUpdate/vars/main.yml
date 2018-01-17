@@ -1,0 +1,9 @@
+---
+# vars file for GeoIPUpdate
+PkgName: geoipupdate
+version: 2.2.2
+Downloads: /opt/software
+ConfigFile: GeoIP.conf
+ShellCmd: grep /usr/local/bin/geoipupdate /var/spool/cron/root
+CronName: 每周三更新地理位置信息
+GeoBin: /usr/local/bin/geoipupdate

@@ -1,0 +1,14 @@
+---
+# vars file for rabbitmq
+rabbitmq:
+  name: rabbitmq
+  version: 3.6.9
+  rpm: rabbitmq-server-3.6.9-1.el6.noarch.rpm
+erlang:
+  name: erlang
+  repo: https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm  
+  version: "19.2"
+socat:
+  name: socat
+  repo: http://www.convirture.com/repos/definitions/rhel/6.x/convirt.repo
+Downloads: /opt/software

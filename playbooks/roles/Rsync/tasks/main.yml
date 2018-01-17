@@ -1,0 +1,20 @@
+---
+# tasks file for Rsync
+- name: 查看是否已安装rsync
+  shell: "{{RpmCmd}}"
+  ignore_errors: yes
+  register: result
+- name: 如果没装就yum安装
+  yum: name={{ProgName}} state=latest
+  when: result.stdout=="0"
+  notify:
+  - disable xinetd
+- name: 创建配置文件
+  file: path={{ConfigFile}} state=touch mode=0644
+  when: result.stdout=="0"
+- name: 同步启动脚本
+  template: src=rsync.j2 dest=/etc/init.d/{{ProgName}} owner=root group=root mode=0755
+  when: result.stdout=="0"
+- name: 启动服务并且配置为开机启动
+  service: name={{ProgName}} state=started enabled=yes
+  when: result.stdout=="0"

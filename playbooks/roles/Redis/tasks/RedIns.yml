@@ -1,0 +1,13 @@
+- name: 确保远程下载路径存在
+  file: path={{Downloads}} state=directory
+- name: 拷贝redis到远程主机
+  synchronize: src={{Redis.name}}-{{Redis.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 安装redis
+  shell: chdir={{Downloads}}/{{Redis.name}}-{{Redis.version}} make PREFIX={{Redis.prefix}} install
+- name: 创建目录
+  file: path={{item}} state=directory
+  with_items:
+  - "{{Dir.conf}}"
+  - "{{Dir.db}}"
+  - "{{Dir.run}}"
+  - "{{Dir.log}}"

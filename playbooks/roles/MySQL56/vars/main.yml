@@ -1,0 +1,25 @@
+---
+# vars file for MySQL56
+DepPkgs:
+- libaio
+
+Downloads: /opt/software
+
+MySQL:
+  name: mysql
+  version: 5.6.25
+  cfgfile: my.cnf
+  init: /usr/bin/mysql_install_db
+  password: "1234568"
+  admin: /usr/bin/mysqladmin
+  pkgs:
+    - MySQL-client-5.6.25-1.el6.x86_64
+    - MySQL-devel-5.6.25-1.el6.x86_64
+    - MySQL-embedded-5.6.25-1.el6.x86_64
+    - MySQL-server-5.6.25-1.el6.x86_64
+    - MySQL-shared-5.6.25-1.el6.x86_64
+  dir:
+    - /data/mysql/run
+    - /data/mysql/data
+    - /data/mysql/logs
+    - /data/mysql/slow_query_log

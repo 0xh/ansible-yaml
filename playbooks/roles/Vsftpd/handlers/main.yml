@@ -1,0 +1,4 @@
+---
+# handlers file for Vsftpd
+- name: start vsftpd
+  service: name={{ProgName}} state=restarted enabled=yes

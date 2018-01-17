@@ -1,0 +1,20 @@
+- name: 查看是否已经存在mcrypt
+  shell: ls {{Modules.mcrypt.prefix}}
+  register: mcryptInstalled
+  ignore_errors: yes
+- name: 拷贝mcrypt
+  synchronize: src={{Modules.mcrypt.name}}-{{Modules.mcrypt.version}} dest={{Downloads}} recursive=yes delete=yes
+  when: mcryptInstalled|failed
+- name: 创建mcrypt安装路径
+  file: path={{Modules.mcrypt.prefix}} state=directory owner=root group=root
+  when: mcryptInstalled|failed
+- name: 配置mcrypt
+  environment: "{{Modules.mcrypt.environ}}"
+  shell: chdir="{{Downloads}}/{{Modules.mcrypt.name}}-{{Modules.mcrypt.version}}" ./configure --prefix={{Modules.mcrypt.prefix}} {{Modules.mcrypt.with_args}}
+  when: mcryptInstalled|failed
+- name: 编译mcrypt
+  shell: chdir={{Downloads}}/{{Modules.mcrypt.name}}-{{Modules.mcrypt.version}} make -j 4 
+  when: mcryptInstalled|failed
+- name: 安装mcrypt
+  shell: chdir={{Downloads}}/{{Modules.mcrypt.name}}-{{Modules.mcrypt.version}} make install
+  when: mcryptInstalled|failed

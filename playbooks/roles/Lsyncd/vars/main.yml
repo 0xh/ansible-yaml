@@ -1,0 +1,5 @@
+---
+# vars file for Lsyncd
+PkgName: lsyncd-2.1.5-0.el6.x86_64.rpm
+Downloads: /opt/software
+ShellCmd: rpm -qa|grep -c lsync

@@ -1,0 +1,139 @@
+# 安装igbinary
+- name: 拷贝igbinary到远程主机
+  synchronize: src={{Modules.igbinary.name}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为igbinary生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} {{PHP_Tools.phpize}}
+- name: 配置igbinary
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} ./configure CFLAGS="-O2 -g" --enable-igbinary --with-php-config="{{PHP_Tools.php_config}}"
+- name: 编译igbinary
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} make -j 4
+- name: 安装igbinary
+  shell: chdir={{Downloads}}/{{Modules.igbinary.name}} make install
+
+# 安装freetype
+- name: 拷贝freetype到远程主机
+  synchronize: src={{Modules.freetype.name}}-{{Modules.freetype.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置freetype
+  shell: chdir={{Downloads}}/{{Modules.freetype.name}}-{{Modules.freetype.version}} ./configure --prefix={{Modules.freetype.prefix}} {{Modules.freetype.with_args}}
+- name: 编译freetype
+  shell: chdir={{Downloads}}/{{Modules.freetype.name}}-{{Modules.freetype.version}} make -j 4
+- name: 安装freetype
+  shell: chdir={{Downloads}}/{{Modules.freetype.name}}-{{Modules.freetype.version}} make install
+
+# 安装libpng
+- name: 拷贝libpng到远程主机
+  synchronize: src={{Modules.libpng.name}}-{{Modules.libpng.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置libpng
+  shell: chdir={{Downloads}}/{{Modules.libpng.name}}-{{Modules.libpng.version}} ./configure --prefix={{Modules.libpng.prefix}} {{Modules.libpng.with_args}}
+- name: 编译libpng
+  shell: chdir={{Downloads}}/{{Modules.libpng.name}}-{{Modules.libpng.version}} make -j 4
+- name: 安装libpng
+  shell: chdir={{Downloads}}/{{Modules.libpng.name}}-{{Modules.libpng.version}} make install
+
+# 安装jpegsrc
+- name: 拷贝jpegsrc到远程主机
+  synchronize: src={{Modules.jpegsrc.name}}-{{Modules.jpegsrc.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置jpegsrc
+  shell: chdir={{Downloads}}/{{Modules.jpegsrc.name}}-{{Modules.jpegsrc.version}} ./configure --prefix={{Modules.jpegsrc.prefix}} {{Modules.jpegsrc.with_args}}
+- name: 编译jpegsrc
+  shell: chdir={{Downloads}}/{{Modules.jpegsrc.name}}-{{Modules.jpegsrc.version}} make -j 4
+- name: 安装jpegsrc
+  shell: chdir={{Downloads}}/{{Modules.jpegsrc.name}}-{{Modules.jpegsrc.version}} make install
+
+# 安装fontconfig
+- name: 拷贝fontconfig到远程主机
+  synchronize: src={{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置fontconfig
+  shell: chdir={{Downloads}}/{{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} ./configure --prefix={{Modules.fontconfig.prefix}} --enable-libxml2
+- name: 编译fontconfig
+  shell: chdir={{Downloads}}/{{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} make -j 4
+- name: 安装fontconfig
+  shell: chdir={{Downloads}}/{{Modules.fontconfig.name}}-{{Modules.fontconfig.version}} make install
+
+# 安装GD
+- name: 拷贝GD到远程主机
+  synchronize: src={{GD.name}}-{{GD.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置GD
+  shell: chdir={{Downloads}}/{{GD.name}}-{{GD.version}} ./configure --prefix={{GD.prefix}} {{GD.with_args}}
+- name: 编译GD
+  shell: chdir={{Downloads}}/{{GD.name}}-{{GD.version}} make -j 4
+- name: 安装GD
+  shell: chdir={{Downloads}}/{{GD.name}}-{{GD.version}} make install
+
+# 安装php-gd支持
+- name: 为php/ext/gd生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}/ext/gd {{PHP_Tools.phpize}}
+- name: 配置php/ext/gd
+  shell: chdir={{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}/ext/gd ./configure {{GD.ext_gd_with_args}}
+- name: 编译php/ext/gd
+  shell: chdir={{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}/ext/gd make -j 4
+- name: 安装php/ext/gd
+  shell: chdir={{Downloads}}/{{Modules.PHP.name}}-{{Modules.PHP.version}}/ext/gd make install
+
+# 安装ImageMagick
+- name: 拷贝ImageMagick到远程主机
+  synchronize: src={{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置ImageMagick
+  shell: chdir={{Downloads}}/{{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} ./configure --prefix={{Modules.ImageMagick.prefix}}
+- name: 编译ImageMagick
+  shell: chdir={{Downloads}}/{{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} make -j 4
+- name: 安装ImageMagick
+  shell: chdir={{Downloads}}/{{Modules.ImageMagick.name}}-{{Modules.ImageMagick.version}} make install
+
+# 安装php-imagick支持
+- name: 拷贝imagick到远程主机
+  synchronize: src={{Modules.imagick.name}}-{{Modules.imagick.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为imagick生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} {{PHP_Tools.phpize}}
+- name: 配置imagick
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} ./configure --with-imagick={{Modules.ImageMagick.prefix}} --with-php-config={{PHP_Tools.php_config}}
+- name: 编译imagick
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} make -j 4
+- name: 安装imagick
+  shell: chdir={{Downloads}}/{{Modules.imagick.name}}-{{Modules.imagick.version}} make install
+
+# 安装php-redis支持
+- name: 拷贝redis到远程主机
+  synchronize: src={{Modules.redis.name}}-{{Modules.redis.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为redis生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} {{PHP_Tools.phpize}}
+- name: 配置redis
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} ./configure --with-php-config={{PHP_Tools.php_config}}
+- name: 编译redis
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} make -j 4
+- name: 安装redis
+  shell: chdir={{Downloads}}/{{Modules.redis.name}}-{{Modules.redis.version}} make install
+
+# 安装php-memcache支持
+- name: 拷贝memcache到远程主机
+  synchronize: src={{Modules.memcache.name}}-{{Modules.memcache.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为memcache生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} {{PHP_Tools.phpize}}
+- name: 配置memcache
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} ./configure --with-php-config={{PHP_Tools.php_config}}
+- name: 编译memcache
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} make -j 4
+- name: 安装memcache
+  shell: chdir={{Downloads}}/{{Modules.memcache.name}}-{{Modules.memcache.version}} make install
+
+# 安装libevent
+- name: 拷贝libevent到远程主机
+  synchronize: src={{Modules.libevent.name}}-{{Modules.libevent.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置libevent
+  shell: chdir={{Downloads}}/{{Modules.libevent.name}}-{{Modules.libevent.version}} ./configure --prefix={{Modules.libevent.prefix}}
+- name: 编译libevent
+  shell: chdir={{Downloads}}/{{Modules.libevent.name}}-{{Modules.libevent.version}} make -j 4
+- name: 安装libevent
+  shell: chdir={{Downloads}}/{{Modules.libevent.name}}-{{Modules.libevent.version}} make install
+
+# 安装libevent-php支持
+- name: 拷贝libevent_php到远程主机
+  synchronize: src={{Modules.libevent_php.name}}-{{Modules.libevent_php.version}} dest={{Downloads}} recursive=yes delete=yes
+- name: 为libevent_php生成configure脚本
+  shell: chdir={{Downloads}}/{{Modules.libevent_php.name}}-{{Modules.libevent_php.version}} {{PHP_Tools.phpize}}
+- name: 配置libevent_php
+  shell: chdir={{Downloads}}/{{Modules.libevent_php.name}}-{{Modules.libevent_php.version}} ./configure --with-libevent={{Modules.libevent.prefix}} --with-php-config={{PHP_Tools.php_config}}
+- name: 编译libevent_php
+  shell: chdir={{Downloads}}/{{Modules.libevent_php.name}}-{{Modules.libevent_php.version}} make -j 4
+- name: 安装libevent_php
+  shell: chdir={{Downloads}}/{{Modules.libevent_php.name}}-{{Modules.libevent_php.version}} make install

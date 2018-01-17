@@ -1,0 +1,5 @@
+# tasks file for common
+- include: begin.yml
+- include: copy.yml
+- include: install.yml
+- include: end.yml

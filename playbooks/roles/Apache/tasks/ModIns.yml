@@ -1,0 +1,12 @@
+- name: 创建远程下载目录
+  file: path={{Downloads}} state=directory mode=0755
+- name: 拷贝mod_rpaf模块
+  synchronize: src={{ModName}} dest={{Downloads}} recursive=yes delete=yes
+- name: 安装mod_rpaf模块
+  shell: chdir="{{Downloads}}/{{ModName}}" {{ModInsCmd}}
+- name: 拷贝cronolog日志切割工具
+  synchronize: src={{ToolName}} dest={{Downloads}} recursive=yes delete=yes
+- name: 配置cronolog
+  shell: chdir={{Downloads}}/{{ToolName}} {{ToolConfigure}}
+- name: 编译安装cronlog
+  shell: chdir={{Downloads}}/{{ToolName}} {{ToolInstall}}

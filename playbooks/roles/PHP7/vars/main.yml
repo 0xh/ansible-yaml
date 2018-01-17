@@ -1,0 +1,100 @@
+---
+# vars file for PHP56
+DepPkgs:
+- httpd-devel
+- zlib-devel
+- libxml2-devel
+- bzip2-devel
+- curl-devel
+- libicu-devel
+- libXpm-devel
+- readline-devel
+- libtool
+- libjpeg-devel
+- libpng-devel
+- freetype-devel
+PHPInsDir: /usr/local/php56
+Downloads: /opt/software
+
+Modules:
+  libmcrypt:
+    name: libmcrypt
+    version: 2.5.8
+    prefix: /usr/local/libmcrypt
+  mhash:
+    name: mhash
+    version: 0.9.9.9
+    prefix: /usr/local/mhash
+  mcrypt:
+    name: mcrypt
+    version: 2.6.8
+    prefix: /usr/local/mcrypt
+    with_args: --with-libmcrypt-prefix=/usr/local/libmcrypt/
+    environ: 
+      LD_LIBRARY_PATH: /usr/local/mhash/lib:/usr/local/libmcrypt/lib
+      LDFLAGS: -L/usr/local/mhash/lib -I/usr/local/mhash/include
+      CFLAGS: -I/usr/local/mhash/include
+  PHP:
+    name: php
+    version: 5.6.11
+    prefix: /usr/local/php56
+    with_args: --with-config-file-path=/etc --enable-inline-optimization --disable-debug --with-apxs2=/usr/sbin/apxs --disable-rpath --enable-shared --enable-opcache --enable-apcu-bc --enable-fpm --with-mysql --with-mysqli --with-pdo-mysql --with-gettext --enable-mbstring --with-iconv --with-mcrypt=/usr/local/libmcrypt --with-mhash --with-openssl --enable-bcmath --enable-soap --with-libxml-dir --enable-pcntl --enable-shmop --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-sockets --with-curl --with-zlib --enable-zip --with-bz2 --with-readline --enable-calendar --enable-ftp
+    config_file: php.ini.j2
+    environ: 
+      LD_LIBRARY_PATH: /usr/local/mhash/lib:/usr/local/libmcrypt/lib
+      LDFLAGS: -L/usr/local/mhash/lib -I/usr/local/mhash/include
+      CFLAGS: -I/usr/local/mhash/include
+  igbinary:
+    name: igbinary-master
+  freetype:
+    name: freetype
+    version: 2.4.0
+    prefix: /usr/local/freetype
+    with_args: --enable-shared
+  libpng:
+    name: libpng
+    version: 1.6.18
+    prefix: /usr/local/libpng
+    with_args: --enable-shared
+  jpegsrc:
+    name: jpeg
+    version: 9a
+    prefix: /usr/local/jpeg
+    with_args: --enable-shared
+  fontconfig:
+    name: fontconfig
+    version: 2.11.94
+    prefix: /usr/local/fontconfig
+  ImageMagick:
+    name: ImageMagick
+    version: 7.0.1-1
+    prefix: /usr/local/imagemagick7
+  imagick:
+    name: imagick
+    version: 3.4.1
+  redis:
+    name: redis
+    version: 2.2.7
+  memcache:
+    name: memcache
+    version: 3.0.6
+  libevent:
+    name: libevent
+    version: 2.0.10-stable
+    prefix: /usr/local/libevent
+  libevent_php:
+    name: libevent
+    version: 0.1.0
+
+PHP_Tools:
+  phpize: "{{Modules.PHP.prefix}}/bin/phpize"
+  php_config: "{{Modules.PHP.prefix}}/bin/php-config"
+
+GD:
+  name: gd
+  version: 2.0.33
+  prefix: /usr/local/gd2
+  with_args: --with-jpeg={{Modules.jpegsrc.prefix}} --with-png={{Modules.libpng.prefix}} --with-freetype={{Modules.freetype.prefix}} --with-fontconfig={{Modules.fontconfig.prefix}} --with-xpm=/usr
+  ext_gd_with_args: --with-php-config={{PHP_Tools.php_config}} --with-jpeg-dir={{Modules.jpegsrc.prefix}} --with-png-dir={{Modules.libpng.prefix}} --with-freetype-dir={{Modules.freetype.prefix}}
+
+

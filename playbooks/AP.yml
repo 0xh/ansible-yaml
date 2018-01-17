@@ -1,0 +1,19 @@
+---
+- hosts: crm
+  remote_user: liushuang
+  sudo: yes
+  roles:
+    #- sysinit
+    #- filebeat
+    #- zabbix_agent
+    #- Rsync
+    #- Lsyncd
+    #- Vsftpd
+    #- Apache
+    - PHP5.6.11
+    #- Nginx14
+    #- GeoIPUpdate
+    #- Redis
+    #- Memcached
+    #- Python27
+    #- MySQL56

@@ -1,0 +1,9 @@
+- name: 查看当前python版本
+  shell: . /etc/profile && pyenv versions|grep "{{python.version}}"
+  register: ven
+  ignore_errors: yes
+- name: 安装python {{python.version}}
+  shell: . /etc/profile && pyenv install {{python.version}}
+  when: ven|failed
+- name: 将{{python.version}}配置为全局使用
+  shell: . /etc/profile && pyenv global {{python.version}}

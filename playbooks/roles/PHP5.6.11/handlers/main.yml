@@ -1,0 +1,4 @@
+---
+# handlers file for PHP56
+- name: reload env
+  shell: source /etc/profile

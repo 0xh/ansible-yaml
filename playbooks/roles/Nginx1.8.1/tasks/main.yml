@@ -1,0 +1,12 @@
+---
+# tasks file for Nginx18
+- name: 查看是否已经安装过nginx
+  shell: ls {{Nginx.prefix}}
+  register: nginxInstalled
+  ignore_errors: yes
+- include: DepIns.yml
+  when: nginxInstalled|failed
+- include: ModIns.yml
+  when: nginxInstalled|failed
+- include: NgxIns.yml
+  when: nginxInstalled|failed

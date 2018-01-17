@@ -1,0 +1,20 @@
+---
+# vars file for Apache
+PkgsDep:
+  - zlib
+  - zlib-devel
+  - mod_ssl
+  - mod_perl
+  - openssh
+ProgName: httpd
+PkgsIns:
+  - httpd-tools
+  - httpd
+  - httpd-devel
+  - httpd-manual
+Downloads: /opt/software
+ModName: mod_rpaf-0.6
+ModInsCmd: /usr/sbin/apxs -i -c -n mod_rpaf-2.0.so mod_rpaf-2.0.c
+ToolName: cronolog-1.6.2
+ToolConfigure: ./configure
+ToolInstall: make && make install

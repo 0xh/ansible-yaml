@@ -1,0 +1,4 @@
+- name: 添加host解析记录
+  lineinfile: dest=/etc/hosts line="{{logstash.ip}} {{logstash.host}}" backup=yes
+- name: start filebeat as systemV service
+  service: name=filebeat state=started enabled=yes

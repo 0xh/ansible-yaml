@@ -1,0 +1,15 @@
+- name: 确保下载目录存在
+  file: path={{Downloads}} state=directory
+- name: 拷贝mysql安装包到远程主机
+  copy: src={{item}}.rpm dest={{Downloads}}
+  with_items: "{{MySQL.pkgs}}"
+- name: 查看系统自带lib包
+  shell: rpm -qa|grep mysql-libs
+  ignore_errors: yes
+  register: result3
+- name: 移除系统自带lib包
+  shell: rpm -e --nodeps mysql-libs
+  when: result3|success
+- name: 安装包
+  shell: chdir={{Downloads}} rpm -ivh {{item}}.rpm
+  with_items: "{{MySQL.pkgs}}"
