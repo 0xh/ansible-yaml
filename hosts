@@ -1,9 +1,9 @@
 [automation]
-automation-01.shein.com ansible_host=10.168.59.168 ansible_port=22
-log-collect01.shein.com ansible_host=10.168.59.136 ansible_port=22
+automation-01.shein.com ansible_host= ansible_port=22
+log-collect01.shein.com ansible_host= ansible_port=22
 
 [test]
-shein-nginx-xyz ansible_host=10.29.74.10 ansible_port=22
+shein-nginx-xyz ansible_host= ansible_port=22
 
 [PDC:children]
 rabbitmq
