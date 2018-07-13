@@ -17,79 +17,23 @@ nginx
 mysql
 
 [rabbitmq]
-mq01-new.shein.com ansible_host=10.168.59.188 ansible_port=22
-mq02-new.shein.com ansible_host=10.168.59.131 ansible_port=22
-nodejs01-new.shein.com ansible_host=10.168.59.143 ansible_port=22
+m
 
 [nodejs]
-nodejs01-new.shein.com ansible_host=10.168.59.143 ansible_port=22
-giftcard-nodejs.shein.com ansible_host=10.160.254.63 ansible_port=22
+
 
 [php]
-javaphpo1-2017.shein.com ansible_host=10.168.59.180 ansible_port=22
-php02-2017.shein.com ansible_host=10.168.59.165 ansible_port=22
+
 
 [java]
-javaphpo1-2017.shein.com ansible_host=10.168.59.180 ansible_port=22
-java02-2017.shein.com ansible_host=10.168.59.166 ansible_port=22
-java03.shein.com ansible_host=10.160.254.2 ansible_port=22
 
 [twemproxy]
-twemproxy01-2017.shein.com ansible_host=10.168.59.179 ansible_port=22
-twemproxy02-2017.shein.com ansible_host=10.168.59.186 ansible_port=22
+
 
 [elk]
-elk01-2017.shein.com ansible_host=10.168.59.190 ansible_port=22
+
 
 [canal]
-canal-2017.shein.com ansible_host=10.168.59.170 ansible_port=22
+
 
 [nginx]
-haproxynginx01-2017.shein.com ansible_host=10.168.59.163 ansible_port=22
-market-gateway.shein.com ansible_host=10.160.254.43 ansible_port=22
-
-[mysql]
-mysql-master-2017.shein.com ansible_host=10.168.59.149 ansible_port=22
-mysql-slave01-2017.shein.com ansible_host=10.168.59.134 ansible_port=22
-
-[center_test]
-center-test01.shein.com ansible_host=10.168.59.157 ansible_port=22
-center-test02.shein.com ansible_host=10.168.59.174 ansible_port=22
-
-[bigdata]
-sheinrecpage.shein.com ansible_host=10.29.74.12 ansible_port=22
-elasticsearch05.shein.com ansible_host=10.168.59.138 ansible_port=22
-elasticsearch06.shein.com ansible_host=10.168.59.187 ansible_port=22
-srmdata2.shein.com ansible_host=10.160.254.60 ansible_port=22
-bi-redis.shein.com ansible_host=10.28.140.80 ansible_port=22
-es-133backup.shein.com ansible_host=10.160.254.46 ansible_port=22
-
-[giftcard]
-giftcard-redis.shein.com ansible_host=10.168.59.132 ansible_port=22
-javaphpo1-2017.shein.com ansible_host=10.168.59.180 ansible_port=22
-php02-2017.shein.com ansible_host=10.168.59.165 ansible_port=22
-nodejs01-new.shein.com ansible_host=10.168.59.143 ansible_port=22
-
-[mmcphp]
-mmc-php01.makemechic.com ansible_host=10.168.59.135 ansible_port=22
-mmc-php02.makemechic.com ansible_host=10.168.59.189 ansible_port=22
-
-[mmcredis]
-mmc-redis01.makemechic.com ansible_host=10.160.254.13 ansible_port=22
-mmc-redis02.makemechic.com ansible_host=10.168.59.140 ansible_port=22
-
-[mmcdb]
-mmc-mysql01.makemechic.com ansible_host=10.168.59.161 ansible_port=22
-mmc-mysql02.makemechic.com ansible_host=10.168.59.148 ansible_port=22
-
-[mmcadmin]
-mmc-houtai.makemechic.com ansible_host=10.160.254.27 ansible_port=22
-
-[romweapi]
-api03.romwe.com ansible_host=10.54.30.61 ansible_port=22
-
-[crm]
-crm-mail-03.shein.com ansible_host=10.28.140.82 ansible_port=22
-
-[redis]
-sz-redis.shein.com ansible_host=10.28.140.124 ansible_port=22
